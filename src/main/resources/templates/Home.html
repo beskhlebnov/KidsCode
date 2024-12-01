@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KidCode - Главная</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">KidsCode</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav" style="margin-left: auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Главная <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/Game">О нас</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Отзывы</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Проекты наших учеников</a>
+            </li>
+            <li th:if="${auth}" class="nav-item">
+                <a class="nav-link" href="/Profile">Личный кабинет</a>
+            </li>
+            <li th:if="${!auth}" class="nav-item">
+                <a class="nav-link" href="/Login">Войти</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Обучение детей программированию</h1>
+            <p class="lead">
+                Развивайте логическое мышление, креативность и навыки решения проблем у вашего ребенка с помощью увлекательных курсов программирования.
+            </p>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Интерактивные уроки</h5>
+                    <p class="card-text">Наши курсы разработаны с учетом возрастных особенностей детей, с использованием интерактивных элементов и игровых механик.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Квалифицированные преподаватели</h5>
+                    <p class="card-text">Наши преподаватели – опытные специалисты, которые с удовольствием поделятся своими знаниями и помогут вашему ребенку освоить программирование.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Развитие творческого потенциала</h5>
+                    <p class="card-text">Программирование – это не только логика, но и творчество. Наши курсы помогут вашему ребенку реализовать свои идеи и создать собственные проекты.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <h2>Почему KidsCode?</h2>
+            <ul>
+                <li>Современные и эффективные методики обучения.</li>
+                <li>Индивидуальный подход к каждому ученику.</li>
+                <li>Увлекательные и интересные уроки.</li>
+                <li>Возможность создания собственных проектов.</li>
+                <li>Поддержка и мотивация на протяжении всего обучения.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

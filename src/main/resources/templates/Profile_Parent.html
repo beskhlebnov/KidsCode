@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KidCode - Личный кабинет</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">KidsCode</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav" style="margin-left: auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Главная</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">О нас</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Отзывы</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Проекты наших учеников</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Личный кабинет</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <div class="row">
+<!--        <div class="col-md-3">-->
+<!--            <div class="list-group">-->
+<!--                <a href="#" class="list-group-item list-group-item-action active">-->
+<!--                    Дети-->
+<!--                </a>-->
+<!--                <a href="#personal-data" class="list-group-item list-group-item-action">Личные данные</a>-->
+<!--                <a href="#messages" class="list-group-item list-group-item-action">Сообщения</a>-->
+<!--            </div>-->
+<!--        </div>-->
+
+        <div class="col-md-9">
+            <div class="d-flex align-items-center mb-4">
+                <img th:src="@{/images/anonim.png}" alt="Фото пользователя" class="rounded-circle" width="50" height="50">
+                <h3 class="ml-3 mb-0" th:text="${user.getSurname()+' '+user.getName()+' '+user.getPatronymic()}"></h3>
+                <form th:action="@{/logout}" style="margin-left: auto" method="post">
+                    <button class="btn btn-danger" type="submit">Выйти</button>
+                </form>
+            </div>
+
+            <div  id="children-section">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">Дети</h2>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Имя</th>
+                                <th>Возраст</th>
+                                <th>Действия</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr  th:each="var : ${kids}">
+                                <td th:text="${var.getUser().getSurname() + ' ' + var.getUser().getName() + ' ' + var.getUser().getPatronymic()}"></td>
+                                <td th:text="${var.getAge()}"></td>
+                                <td>
+                                    <div class="d-flex">
+<!--                                        <button data-bs-toggle="modal" th:data-bs-target="'#update_modal_'+${var.getId()}" class="btn btn-sm btn-primary">Редактировать</button>-->
+                                    <form th:action="@{/Profile/child_delete}" style="margin-left: 10px" th:object="${var}" method="post">
+                                        <input name="id" type="hidden" th:value="${var.getId()}"/>
+                                        <button type="submit" data-bs-toggle="modal" class="btn btn-sm btn-danger">Удалить</button>
+                                    </form>
+                                    </div>
+                                </td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+
+<!--                       <div th:each="var : ${kids}" class="modal fade" th:id="update_modal_+${var.getId()}" tabindex="-1" role="dialog" th:aria-labelledby="update_modal_label+${var.getId()}" aria-hidden="true">-->
+<!--                            <div class="modal-dialog">-->
+<!--                                <div class="modal-content">-->
+<!--                                    <div class="modal-header">-->
+<!--                                        <h5 class="modal-title" th:id="update_modal_label+${var.getId()}">Редактирование</h5>-->
+<!--                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                                            <span aria-hidden="true">&times;</span>-->
+<!--                                        </button>-->
+<!--                                    </div>-->
+<!--                                    <form th:action="@{/Profile/update_child}" th:object="${var.getPref()}" method="post">-->
+<!--                                        <div class="modal-body">-->
+
+<!--                                            <div class="form-group">-->
+<!--                                                <label th:for="lastName+${var.getId()}">Фамилия</label>-->
+<!--                                                <input type="text" class="form-control" name="lastName" th:id="lastName+${var.getId()}"-->
+<!--                                                       th:field="*{surname}" th:value="${var.getUser().getSurname()}" placeholder="Введите фамилию">-->
+<!--                                            </div>-->
+
+<!--                                            <div class="form-group">-->
+<!--                                                <label th:for="firstName+${var.getId()}">Имя</label>-->
+<!--                                                <input type="text" class="form-control" th:id="firstName+${var.getId()}" th:field="*{name}" th:text="${var.getUser().getName()}">-->
+<!--                                            </div>-->
+
+<!--                                            <div class="form-group">-->
+<!--                                                <label th:for="middleName+${var.getId()}">Отчество</label>-->
+<!--                                                <input type="text" class="form-control" th:id="middleName+${var.getId()}" th:value="${var.getUser().getPatronymic()}" th:field="*{patronymic}" placeholder="Введите отчество">-->
+<!--                                            </div>-->
+
+<!--                                            <div class="form-group">-->
+<!--                                                <label th:for="age+${var.getId()}">Возраст</label>-->
+<!--                                                <input type="number" class="form-control" th:id="age+${var.getId()}" th:value="${var.getAge()}" th:field="*{age}" placeholder="Введите возраст">-->
+<!--                                            </div>-->
+
+<!--                                            <div class="form-group">-->
+<!--                                                <label th:for="login+${var.getId()}">Логин для ребенка</label>-->
+<!--                                                <input type="text" class="form-control" th:id="login+${var.getId()}" th:field="*{login}" th:value="${var.getUser().getUsername()}" placeholder="Введите логин ребенка">-->
+<!--                                            </div>-->
+
+<!--                                            <div class="form-group">-->
+<!--                                                <label th:for="password+${var.getId()}">Пароль для ребнка</label>-->
+<!--                                                <input type="text" class="form-control" th:id="password+${var.getId()}" th:value="${var.getUser().getPassword()}" th:field="*{password}" placeholder="Введите пароль ребенка">-->
+<!--                                            </div>-->
+
+<!--                                            <input name="parent" type="hidden" th:value="${user.getUsername()}"/>-->
+
+<!--                                        </div>-->
+<!--                                        <div class="modal-footer">-->
+<!--                                            <button class="btn btn-secondary" data-dismiss="modal">Отмена</button>-->
+<!--                                            <button class="btn btn-primary" type="submit">Редактировать</button>-->
+<!--                                        </div>-->
+<!--                                    </form>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                            <button class="btn btn-success" id="add_kid" data-bs-toggle="modal" data-bs-target="#addModal">Добавить ребенка</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="personal-data" class="mt-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">Личные данные</h2>
+                        <div class="d-flex"><strong>ФИО: </strong> <p th:text=" ${user.getFio()}" style="margin-left: 10px"></p></div>
+                        <div class="d-flex"><strong>Email: </strong> <p th:text=" ${user.getUsername()}" style="margin-left: 10px"></p></div>
+                        <div th:if="${user.getPhone()!=null}" class="d-flex"><strong>Телефон: </strong> <p th:text=" ${user.getPhone()}" style="margin-left: 10px"></p>
+                        </div>
+                        <button class="btn btn-primary">Редактировать</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="messages" class="mt-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">Сообщения</h2>
+                        <p>Тут будут чаты с преподователями</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel">Добавить ребенка</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form th:action="@{/Profile/addChild}" th:object="${child}" method="post">
+            <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="lastName">Фамилия</label>
+                        <input type="text" class="form-control" name="lastName" id="lastName"
+                               th:field="*{surname}" placeholder="Введите фамилию">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="firstName">Имя</label>
+                        <input type="text" class="form-control" id="firstName" th:field="*{name}" placeholder="Введите имя">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="middleName">Отчество</label>
+                        <input type="text" class="form-control" id="middleName" th:field="*{patronymic}" placeholder="Введите отчество">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="age">Возраст</label>
+                        <input type="number" class="form-control" id="age" th:field="*{age}" placeholder="Введите возраст">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login">Логин для ребенка</label>
+                        <input type="text" class="form-control" id="login" th:field="*{login}" placeholder="Введите логин ребенка">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Пароль для ребнка</label>
+                        <input type="text" class="form-control" id="password" th:field="*{password}" placeholder="Введите пароль ребенка">
+                    </div>
+
+                    <input name="parent" type="hidden" th:value="${user.getUsername()}"/>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                <button class="btn btn-primary" type="submit">Добавить</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="https://kit.fontawesome.com/6e5d380cb8.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+</body>
+</html>
